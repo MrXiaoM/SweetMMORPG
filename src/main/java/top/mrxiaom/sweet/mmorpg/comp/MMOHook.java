@@ -3,66 +3,42 @@ package top.mrxiaom.sweet.mmorpg.comp;
 import net.Indyuce.mmoitems.api.player.PlayerData;
 import net.Indyuce.mmoitems.api.player.RPGPlayer;
 import net.Indyuce.mmoitems.comp.rpg.RPGHandler;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerLevelChangeEvent;
+import top.mrxiaom.pluginbase.utils.Util;
 import top.mrxiaom.sweet.mmorpg.SweetMMORPG;
-import top.mrxiaom.sweet.mmorpg.api.ResourceData;
+import top.mrxiaom.sweet.mmorpg.comp.player.PlayerBuiltIn;
+import top.mrxiaom.sweet.mmorpg.func.AbstractPluginHolder;
 
-public class MMOHook implements RPGHandler, Listener {
+public class MMOHook extends AbstractPluginHolder implements RPGHandler, Listener {
+    public final EnumManager manager;
     LevelChangeResolver levelChange = new LevelChangeResolver();
+    public MMOHook(SweetMMORPG plugin) {
+        super(plugin, true);
+        FileConfiguration config = plugin.getConfig();
+        manager = Util.valueOr(EnumManager.class, config.getString("manager", "BuiltIn"), EnumManager.BuiltIn);
+    }
+
     @EventHandler
     public void a(PlayerLevelChangeEvent event) {
         levelChange.resolve(event.getPlayer());
     }
 
     public RPGPlayer getInfo(PlayerData data) {
-        return new MMOPlayer(data);
+        switch (manager) {
+            case BuiltIn:
+                return new PlayerBuiltIn(plugin, data);
+        }
+        throw new IllegalStateException("预料之中的错误: 未知的管理器类型 " + manager.name());
     }
 
     @Override
     public void refreshStats(PlayerData data) {
     }
 
-    public static class MMOPlayer extends RPGPlayer {
-        private final ResourceData data;
-
-        public MMOPlayer(PlayerData playerData) {
-            super(playerData);
-
-            this.data = SweetMMORPG.getInstance().getPlayerDatabase().getOrCached(playerData.getUniqueId());
-        }
-
-        public int getLevel() {
-            return getPlayer().getLevel();
-        }
-
-        public String getClassName() {
-            return "";
-        }
-
-        public double getMana() {
-            return data.getMana();
-        }
-
-        public double getStamina() {
-            return data.getStamina();
-        }
-
-        public void setMana(double value) {
-            data.setMana(value);
-        }
-
-        public void setStamina(double value) {
-            data.setStamina(value);
-        }
-
-        public void giveMana(double value) {
-            data.giveMana(value);
-        }
-
-        public void giveStamina(double value) {
-            data.giveStamina(value);
-        }
+    public static MMOHook inst() {
+        return instanceOf(MMOHook.class);
     }
 }
