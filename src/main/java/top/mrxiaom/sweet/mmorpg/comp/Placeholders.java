@@ -2,6 +2,8 @@ package top.mrxiaom.sweet.mmorpg.comp;
 
 import io.lumine.mythic.lib.MythicLib;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
+import net.Indyuce.mmoitems.MMOItems;
+import net.Indyuce.mmoitems.api.player.RPGPlayer;
 import org.bukkit.OfflinePlayer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -32,12 +34,13 @@ public class Placeholders extends PlaceholderExpansion {
     @Override
     public @Nullable String onRequest(OfflinePlayer player, @NotNull String params) {
         ResourceData data = plugin.getPlayerDatabase().getOrCached(player);
-        if (data == null) return "null";
+        RPGPlayer rpg = data == null ? null : data.getPlayer();
+        if (data == null || rpg == null) return "null";
         switch (params.toLowerCase()) {
             case "mana":
-                return MythicLib.plugin.getMMOConfig().decimal.format(data.getMana());
+                return MythicLib.plugin.getMMOConfig().decimal.format(rpg.getMana());
             case "stamina":
-                return MythicLib.plugin.getMMOConfig().decimal.format(data.getStamina());
+                return MythicLib.plugin.getMMOConfig().decimal.format(rpg.getStamina());
             case "max_mana":
                 return MythicLib.plugin.getMMOConfig().decimal.format(data.getStat(StatType.MAX_MANA));
             case "max_stamina":

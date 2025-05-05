@@ -4,6 +4,7 @@ import io.lumine.mythic.lib.api.player.MMOPlayerData;
 import io.lumine.mythic.lib.api.stat.StatInstance;
 import io.lumine.mythic.lib.api.stat.StatMap;
 import io.lumine.mythic.lib.api.stat.modifier.StatModifier;
+import net.Indyuce.mmoitems.api.player.RPGPlayer;
 import org.bukkit.Bukkit;
 import top.mrxiaom.sweet.mmorpg.SweetMMORPG;
 import top.mrxiaom.sweet.mmorpg.api.event.ResourceRegainEvent;
@@ -15,6 +16,7 @@ import java.util.UUID;
 
 public class ResourceData {
     private final MMOPlayerData data;
+    private RPGPlayer player;
 
     private double mana;
     private double stamina;
@@ -54,6 +56,15 @@ public class ResourceData {
 
     public MMOPlayerData toMythicLib() {
         return data;
+    }
+
+    public RPGPlayer getPlayer() {
+        return player;
+    }
+
+    public ResourceData setPlayer(RPGPlayer player) {
+        this.player = player;
+        return this;
     }
 
     public UUID getUniqueId() {

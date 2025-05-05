@@ -5,14 +5,17 @@ import net.Indyuce.mmoitems.api.player.RPGPlayer;
 import top.mrxiaom.sweet.mmorpg.SweetMMORPG;
 import top.mrxiaom.sweet.mmorpg.api.ResourceData;
 
+import java.util.UUID;
+
 public class PlayerBuiltIn extends RPGPlayer {
     private final SweetMMORPG plugin;
     private final ResourceData data;
 
     public PlayerBuiltIn(SweetMMORPG plugin, PlayerData playerData) {
         super(playerData);
+        UUID uuid = playerData.getUniqueId();
         this.plugin = plugin;
-        this.data = plugin.getPlayerDatabase().getOrCached(playerData.getUniqueId());
+        this.data = plugin.getPlayerDatabase().getOrCached(uuid).setPlayer(this);
     }
 
     public int getLevel() {

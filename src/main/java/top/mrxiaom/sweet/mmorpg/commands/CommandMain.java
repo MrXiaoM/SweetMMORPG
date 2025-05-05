@@ -1,6 +1,7 @@
 package top.mrxiaom.sweet.mmorpg.commands;
         
 import com.google.common.collect.Lists;
+import net.Indyuce.mmoitems.api.player.RPGPlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -47,7 +48,8 @@ public class CommandMain extends AbstractModule implements CommandExecutor, TabC
             }
             Player player = Util.getOnlinePlayer(args[2]).orElse(null);
             ResourceData data = plugin.getPlayerDatabase().getOrCached(player);
-            if (player == null || data == null || !data.toMythicLib().isOnline()) {
+            RPGPlayer rpg = data == null ? null : data.getPlayer();
+            if (player == null || data == null || rpg == null || !data.toMythicLib().isOnline()) {
                 return t(sender, msgNotOnline);
             }
             Double value = Util.parseDouble(args[3]).orElse(null);
@@ -56,13 +58,13 @@ public class CommandMain extends AbstractModule implements CommandExecutor, TabC
             }
             boolean silent = args.length >= 5 && args[4].equals("-s");
             if (type.equals("mana")) {
-                data.giveMana(value, ResourceRegainReason.PLUGIN);
+                rpg.giveMana(value);
                 if (!silent) return t(sender, msgGiveMana
                         .replace("%player%", player.getName())
                         .replace("%value%", String.valueOf(value)));
             }
             if (type.equals("stamina")) {
-                data.giveStamina(value, ResourceRegainReason.PLUGIN);
+                rpg.giveStamina(value);
                 if (!silent) return t(sender, msgGiveStamina
                         .replace("%player%", player.getName())
                         .replace("%value%", String.valueOf(value)));
