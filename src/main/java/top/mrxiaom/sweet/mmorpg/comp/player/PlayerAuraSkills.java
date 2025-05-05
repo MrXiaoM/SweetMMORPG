@@ -12,7 +12,7 @@ import java.util.UUID;
 public class PlayerAuraSkills extends RPGPlayer implements IExtendedRPGPlayer {
     private final SweetMMORPG plugin;
     private final ResourceData data;
-    private final SkillsUser user;
+    private SkillsUser user;
 
     public PlayerAuraSkills(SweetMMORPG plugin, PlayerData playerData) {
         super(playerData);
@@ -20,6 +20,10 @@ public class PlayerAuraSkills extends RPGPlayer implements IExtendedRPGPlayer {
         this.plugin = plugin;
         this.data = plugin.getPlayerDatabase().getOrCached(uuid).setPlayer(this);
         this.user = AuraSkillsApi.get().getUser(uuid);
+    }
+
+    public void setUser(SkillsUser user) {
+        this.user = user;
     }
 
     @Override
