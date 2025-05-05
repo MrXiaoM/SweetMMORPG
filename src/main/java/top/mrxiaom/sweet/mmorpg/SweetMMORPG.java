@@ -25,7 +25,6 @@ public class SweetMMORPG extends BukkitPlugin {
                 .adventure(false)
                 .database(true)
                 .reconnectDatabaseWhenReloadConfig(false)
-                .vaultEconomy(false)
                 .scanIgnore("top.mrxiaom.sweet.mmorpg.libs")
         );
     }
