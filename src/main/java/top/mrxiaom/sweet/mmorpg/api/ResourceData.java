@@ -25,7 +25,6 @@ public class ResourceData {
 
     public ResourceData(MMOPlayerData data, Double mana, Double stamina) {
         this.data = data;
-        registerModifiers();
         this.setMana(mana);
         this.setStamina(stamina);
     }
@@ -42,7 +41,7 @@ public class ResourceData {
         for (StatType stat : StatType.values()) {
             StatInstance inst = statMap.getInstance(stat.name());
             List<StatModifier> modifiers = new ArrayList<>(inst.getModifiers());
-            for (StatModifier modifier : modifiers) {
+            for (StatModifier modifier : modifiers) { // 注销所有旧的属性修改器，以免重复注册
                 if (modifier.getKey().equals("manaAndStamina")) {
                     modifier.unregister(data);
                 }
@@ -64,6 +63,7 @@ public class ResourceData {
 
     public ResourceData setPlayer(RPGPlayer player) {
         this.player = player;
+        registerModifiers();
         return this;
     }
 

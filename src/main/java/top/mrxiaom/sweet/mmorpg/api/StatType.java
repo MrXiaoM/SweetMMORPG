@@ -4,6 +4,7 @@ import net.Indyuce.mmoitems.MMOItems;
 import net.Indyuce.mmoitems.stat.type.ItemStat;
 import org.bukkit.configuration.ConfigurationSection;
 import top.mrxiaom.sweet.mmorpg.comp.EnumManager;
+import top.mrxiaom.sweet.mmorpg.comp.player.PlayerAuraSkills;
 import top.mrxiaom.sweet.mmorpg.stat.ManaRegeneration;
 import top.mrxiaom.sweet.mmorpg.stat.MaxStamina;
 import top.mrxiaom.sweet.mmorpg.stat.StaminaRegeneration;
@@ -41,6 +42,9 @@ public enum StatType {
             String key = "default." + type.name().toLowerCase().replace("_", "-");
             double defaultValue = config.getDouble(key);
             baseValues.put(type, data -> defaultValue);
+        }
+        if (manager.equals(EnumManager.AuraSkills)) {
+            baseValues.put(MAX_MANA, data -> ((PlayerAuraSkills) data.getPlayer()).getMaxMana());
         }
     }
 }

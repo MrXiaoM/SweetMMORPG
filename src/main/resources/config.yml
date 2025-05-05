@@ -1,9 +1,17 @@
 # 主要的法力值、体力值管理器
 # builtIn - 法力值、体力值由本插件接管
+# AuraSkills - 使用 AuraSkills 的法力值 (mana)，使用本插件的体力值
 # 该选项重启服务器生效
 manager: builtIn
 
+# 向其它插件注册属性
+# 该选项重启服务器生效
+hooks:
+  # 注册体力值属性
+  AuraSkills: false
+
 # 默认值
+# 如果使用其它管理器，这里的部分数值无效，被管理器覆盖
 default:
   # 最大法力值
   max-mana: 20

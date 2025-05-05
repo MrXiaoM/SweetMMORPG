@@ -1,5 +1,7 @@
 package top.mrxiaom.sweet.mmorpg;
         
+import dev.aurelium.auraskills.api.AuraSkillsApi;
+import dev.aurelium.auraskills.api.registry.NamespacedRegistry;
 import net.Indyuce.mmoitems.MMOItems;
 import net.Indyuce.mmoitems.comp.rpg.RPGHandler;
 import org.bukkit.Bukkit;
@@ -10,6 +12,7 @@ import org.bukkit.plugin.Plugin;
 import top.mrxiaom.pluginbase.BukkitPlugin;
 import top.mrxiaom.pluginbase.utils.Util;
 import top.mrxiaom.sweet.mmorpg.api.StatType;
+import top.mrxiaom.sweet.mmorpg.comp.AuraStats;
 import top.mrxiaom.sweet.mmorpg.comp.EnumManager;
 import top.mrxiaom.sweet.mmorpg.comp.MMOHook;
 import top.mrxiaom.sweet.mmorpg.comp.Placeholders;
@@ -83,12 +86,12 @@ public class SweetMMORPG extends BukkitPlugin {
                 Bukkit.getPluginManager().registerEvents(handler, this);
             }
         }
+        if (config.getBoolean("hooks.AuraSkills", false)) {
+            AuraSkillsApi api = AuraSkillsApi.get();
+            NamespacedRegistry registry = api.useRegistry(getDescription().getName().toLowerCase(), getDataFolder());
+            registry.registerStat(AuraStats.STAMINA);
+        }
         Bukkit.getOnlinePlayers().forEach(playerDatabase::load);
         getLogger().info("SweetMMORPG 加载完毕");
-    }
-
-    @Override
-    public void reloadConfig() {
-        super.reloadConfig();
     }
 }

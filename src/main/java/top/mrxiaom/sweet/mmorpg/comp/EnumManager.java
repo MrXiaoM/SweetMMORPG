@@ -2,6 +2,7 @@ package top.mrxiaom.sweet.mmorpg.comp;
 
 public enum EnumManager {
     BuiltIn(true, true),
+    AuraSkills(false, true)
 
     ;
     public final boolean regenMana, regenStamina;
