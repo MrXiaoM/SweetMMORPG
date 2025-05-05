@@ -3,11 +3,14 @@ package top.mrxiaom.sweet.mmorpg;
 import net.Indyuce.mmoitems.MMOItems;
 import net.Indyuce.mmoitems.comp.rpg.RPGHandler;
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 import top.mrxiaom.pluginbase.BukkitPlugin;
+import top.mrxiaom.pluginbase.utils.Util;
 import top.mrxiaom.sweet.mmorpg.api.StatType;
+import top.mrxiaom.sweet.mmorpg.comp.EnumManager;
 import top.mrxiaom.sweet.mmorpg.comp.MMOHook;
 import top.mrxiaom.sweet.mmorpg.comp.Placeholders;
 import top.mrxiaom.sweet.mmorpg.database.PlayerDatabase;
@@ -29,9 +32,14 @@ public class SweetMMORPG extends BukkitPlugin {
         );
     }
     private PlayerDatabase playerDatabase;
+    private EnumManager manager;
 
     public PlayerDatabase getPlayerDatabase() {
         return playerDatabase;
+    }
+
+    public EnumManager getManagerType() {
+        return manager;
     }
 
     @Override
@@ -49,9 +57,11 @@ public class SweetMMORPG extends BukkitPlugin {
 
     @Override
     protected void afterEnable() {
+        FileConfiguration config = getConfig();
         if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
             new Placeholders(this).register();
         }
+        manager = Util.valueOr(EnumManager.class, config.getString("manager", "BuiltIn"), EnumManager.BuiltIn);
         MMOHook handler = new MMOHook(this);
         try {
             // https://gitlab.com/phoenix-dvpmt/mmoitems/-/issues/1699
