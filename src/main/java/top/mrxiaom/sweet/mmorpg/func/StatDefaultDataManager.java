@@ -18,6 +18,6 @@ public class StatDefaultDataManager extends AbstractModule {
 
     @Override
     public void reloadConfig(MemoryConfiguration config) {
-        StatType.reloadConfig(config);
+        StatType.reloadConfig(plugin.getManagerType(), config);
     }
 }

@@ -3,12 +3,14 @@ package top.mrxiaom.sweet.mmorpg.api;
 import net.Indyuce.mmoitems.MMOItems;
 import net.Indyuce.mmoitems.stat.type.ItemStat;
 import org.bukkit.configuration.ConfigurationSection;
+import top.mrxiaom.sweet.mmorpg.comp.EnumManager;
 import top.mrxiaom.sweet.mmorpg.stat.ManaRegeneration;
 import top.mrxiaom.sweet.mmorpg.stat.MaxStamina;
 import top.mrxiaom.sweet.mmorpg.stat.StaminaRegeneration;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Function;
 
 public enum StatType {
     MAX_MANA(null),
@@ -16,15 +18,16 @@ public enum StatType {
     MANA_REGENERATION(new ManaRegeneration()),
     STAMINA_REGENERATION(new StaminaRegeneration());
 
-    private static final Map<StatType, Double> baseValues = new HashMap<>();
+    private static final Map<StatType, Function<ResourceData, Double>> baseValues = new HashMap<>();
     private final ItemStat<?, ?> stat;
 
-    private StatType(ItemStat<?, ?> stat) {
+    StatType(ItemStat<?, ?> stat) {
         this.stat = stat;
     }
 
-    public double getBase() {
-        return baseValues.getOrDefault(this, 0.0);
+    public double getBase(ResourceData data) {
+        Function<ResourceData, Double> func = baseValues.getOrDefault(this, null);
+        return func == null ? 0.0 : func.apply(data);
     }
 
     public void registerStat() {
@@ -32,11 +35,12 @@ public enum StatType {
             MMOItems.plugin.getStats().register(stat);
     }
 
-    public static void reloadConfig(ConfigurationSection config) {
+    public static void reloadConfig(EnumManager manager, ConfigurationSection config) {
         baseValues.clear();
         for (StatType type : values()) {
             String key = "default." + type.name().toLowerCase().replace("_", "-");
-            baseValues.put(type, config.getDouble(key));
+            double defaultValue = config.getDouble(key);
+            baseValues.put(type, data -> defaultValue);
         }
     }
 }

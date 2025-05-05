@@ -48,7 +48,7 @@ public class ResourceData {
                 }
             }
             modifiers.clear();
-            StatModifier modifier = new StatModifier("manaAndStamina", stat.name(), stat.getBase());
+            StatModifier modifier = new StatModifier("manaAndStamina", stat.name(), stat.getBase(this));
             modifier.register(data);
             registeredModifiers.add(modifier);
         }
