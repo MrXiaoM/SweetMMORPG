@@ -59,12 +59,18 @@ public class SweetMMORPG extends BukkitPlugin {
     }
 
     @Override
+    protected void beforeReloadConfig(FileConfiguration config) {
+        if (manager == null) {
+            manager = Util.valueOr(EnumManager.class, config.getString("manager", "BuiltIn"), EnumManager.BuiltIn);
+        }
+    }
+
+    @Override
     protected void afterEnable() {
         FileConfiguration config = getConfig();
         if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
             new Placeholders(this).register();
         }
-        manager = Util.valueOr(EnumManager.class, config.getString("manager", "BuiltIn"), EnumManager.BuiltIn);
         MMOHook handler = new MMOHook(this);
         try {
             // https://gitlab.com/phoenix-dvpmt/mmoitems/-/issues/1699
