@@ -8,17 +8,16 @@ import net.Indyuce.mmoitems.manager.data.PlayerDataManager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import top.mrxiaom.pluginbase.func.AutoRegister;
 import top.mrxiaom.sweet.mmorpg.SweetMMORPG;
 import top.mrxiaom.sweet.mmorpg.comp.player.PlayerAuraSkills;
 import top.mrxiaom.sweet.mmorpg.func.AbstractModule;
 
-@AutoRegister(requirePlugins = "AuraSkills")
 public class AuraSkillsListener extends AbstractModule implements Listener {
     public AuraSkillsListener(SweetMMORPG plugin) {
         super(plugin);
         registerEvents();
     }
+
     @EventHandler
     public void onUserLoad(UserLoadEvent e) {
         PlayerData data = getOrSetup(e.getPlayer());

@@ -15,6 +15,9 @@ public class MMOHook extends AbstractPluginHolder implements RPGHandler, Listene
     LevelChangeResolver levelChange = new LevelChangeResolver();
     public MMOHook(SweetMMORPG plugin) {
         super(plugin, true);
+        if (plugin.getManagerType().equals(EnumManager.AuraSkills)) {
+            new AuraSkillsListener(plugin);
+        }
     }
 
     @EventHandler
