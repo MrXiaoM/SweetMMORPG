@@ -2,7 +2,6 @@ package top.mrxiaom.sweet.mmorpg.comp;
 
 import io.lumine.mythic.lib.MythicLib;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
-import net.Indyuce.mmoitems.MMOItems;
 import net.Indyuce.mmoitems.api.player.RPGPlayer;
 import org.bukkit.OfflinePlayer;
 import org.jetbrains.annotations.NotNull;
@@ -10,6 +9,7 @@ import org.jetbrains.annotations.Nullable;
 import top.mrxiaom.sweet.mmorpg.SweetMMORPG;
 import top.mrxiaom.sweet.mmorpg.api.ResourceData;
 import top.mrxiaom.sweet.mmorpg.api.StatType;
+import top.mrxiaom.sweet.mmorpg.comp.player.IExtendedRPGPlayer;
 
 public class Placeholders extends PlaceholderExpansion {
     SweetMMORPG plugin;
@@ -42,9 +42,17 @@ public class Placeholders extends PlaceholderExpansion {
             case "stamina":
                 return MythicLib.plugin.getMMOConfig().decimal.format(rpg.getStamina());
             case "max_mana":
-                return MythicLib.plugin.getMMOConfig().decimal.format(data.getStat(StatType.MAX_MANA));
+                if (rpg instanceof IExtendedRPGPlayer) {
+                    return MythicLib.plugin.getMMOConfig().decimal.format(((IExtendedRPGPlayer) rpg).getMaxMana());
+                } else {
+                    return MythicLib.plugin.getMMOConfig().decimal.format(data.getStat(StatType.MAX_MANA));
+                }
             case "max_stamina":
-                return MythicLib.plugin.getMMOConfig().decimal.format(data.getStat(StatType.MAX_STAMINA));
+                if (rpg instanceof IExtendedRPGPlayer) {
+                    return MythicLib.plugin.getMMOConfig().decimal.format(((IExtendedRPGPlayer) rpg).getMaxStamina());
+                } else {
+                    return MythicLib.plugin.getMMOConfig().decimal.format(data.getStat(StatType.MAX_STAMINA));
+                }
             case "mana_regen":
                 return MythicLib.plugin.getMMOConfig().decimal.format(data.getStat(StatType.MANA_REGENERATION));
             case "stamina_regen":
