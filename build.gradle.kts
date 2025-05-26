@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "top.mrxiaom.sweet.mmorpg"
-version = "1.0.2"
+version = "1.0.3"
 val targetJavaVersion = 8
 val shadowGroup = "top.mrxiaom.sweet.mmorpg.libs"
 allprojects {
