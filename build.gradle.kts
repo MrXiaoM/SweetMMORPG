@@ -10,11 +10,10 @@ val targetJavaVersion = 8
 val shadowGroup = "top.mrxiaom.sweet.mmorpg.libs"
 allprojects {
     repositories {
-        mavenLocal()
         mavenCentral()
         maven("https://repo.codemc.io/repository/maven-public/")
         maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
-        maven("https://repo.extendedclip.com/content/repositories/placeholderapi/")
+        maven("https://repo.helpch.at/releases/")
         maven("https://jitpack.io")
         maven("https://repo.rosewooddev.io/repository/public/")
         maven("https://nexus.phoenixdevt.fr/repository/maven-public/")
@@ -43,7 +42,7 @@ dependencies {
 
     implementation("com.zaxxer:HikariCP:4.0.3") { isTransitive = false }
     implementation("org.jetbrains:annotations:24.0.0")
-    implementation("top.mrxiaom:PluginBase:1.4.0")
+    implementation("top.mrxiaom:PluginBase:1.4.4")
     for (dependency in project.project(":mmoitems").subprojects) {
         implementation(dependency)
     }
