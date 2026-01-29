@@ -9,6 +9,7 @@ softdepend:
   - PlaceholderAPI
   - AuraSkills
 authors: [ MrXiaoM ]
+folia-supported: true
 commands:
   sweetmmorpg:
     description: 'The main command of SweetMMORPG'

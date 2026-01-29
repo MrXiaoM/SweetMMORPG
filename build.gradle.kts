@@ -1,12 +1,20 @@
 plugins {
     java
     `maven-publish`
-    id ("com.github.johnrengelman.shadow") version "7.0.0"
+    id("com.gradleup.shadow") version "8.3.0"
+    id("com.github.gmazzo.buildconfig") version "5.6.7"
 }
+
+buildscript {
+    repositories.mavenCentral()
+    dependencies.classpath("top.mrxiaom:LibrariesResolver-Gradle:1.7.4")
+}
+val base = top.mrxiaom.gradle.LibraryHelper(project)
 
 group = "top.mrxiaom.sweet.mmorpg"
 version = "1.0.3"
 val targetJavaVersion = 8
+val pluginBaseModules = base.modules.run { listOf(library) }
 val shadowGroup = "top.mrxiaom.sweet.mmorpg.libs"
 allprojects {
     repositories {
@@ -39,41 +47,46 @@ dependencies {
     compileOnly("io.lumine:MythicLib-dist:1.6.2-SNAPSHOT")
     compileOnly("net.Indyuce:MMOItems-API:6.10.1-SNAPSHOT")
     compileOnly("dev.aurelium:auraskills-api-bukkit:2.2.4")
+    compileOnly("org.jetbrains:annotations:24.0.0")
 
-    implementation("com.zaxxer:HikariCP:4.0.3") { isTransitive = false }
-    implementation("org.jetbrains:annotations:24.0.0")
-    implementation("top.mrxiaom:PluginBase:1.4.4")
+    base.library("com.zaxxer:HikariCP:4.0.3")
+    implementation("com.github.technicallycoded:FoliaLib:0.4.4") { isTransitive = false }
+    for (artifact in pluginBaseModules) {
+        implementation(artifact)
+    }
+    implementation(base.resolver.lite)
+    compileOnly("io.lumine:MythicLib-dist:1.7.1-SNAPSHOT")
     for (dependency in project.project(":mmoitems").subprojects) {
         implementation(dependency)
     }
 }
+
+buildConfig {
+    className("BuildConstants")
+    packageName("top.mrxiaom.sweet.mmorpg")
+
+    base.doResolveLibraries()
+    buildConfigField("String", "VERSION", "\"${project.version}\"")
+    buildConfigField("java.time.Instant", "BUILD_TIME", "java.time.Instant.ofEpochSecond(${System.currentTimeMillis() / 1000L}L)")
+    buildConfigField("String[]", "RESOLVED_LIBRARIES", base.join())
+}
+
 tasks {
     shadowJar {
-        archiveClassifier.set("")
         mapOf(
-            "org.intellij.lang.annotations" to "annotations.intellij",
-            "org.jetbrains.annotations" to "annotations.jetbrains",
             "top.mrxiaom.pluginbase" to "base",
-            "com.zaxxer.hikari" to "hikari",
         ).forEach { (original, target) ->
             relocate(original, "$shadowGroup.$target")
         }
-        listOf(
-            "top/mrxiaom/pluginbase/func/AbstractGui*",
-            "top/mrxiaom/pluginbase/func/gui/*",
-            "top/mrxiaom/pluginbase/utils/PAPI*",
-            "top/mrxiaom/pluginbase/utils/IA*",
-            "top/mrxiaom/pluginbase/utils/ItemStackUtil*",
-            "top/mrxiaom/pluginbase/func/GuiManager*",
-            "top/mrxiaom/pluginbase/gui/*",
-            "top/mrxiaom/pluginbase/func/LanguageManager*",
-            "top/mrxiaom/pluginbase/func/language/*",
-            "top/mrxiaom/pluginbase/utils/Adventure*",
-            "top/mrxiaom/pluginbase/utils/Bytes*",
-        ).forEach(this::exclude)
+    }
+    val copyTask = create<Copy>("copyBuildArtifact") {
+        dependsOn(shadowJar)
+        from(shadowJar.get().outputs)
+        rename { "${project.name}-$version.jar" }
+        into(rootProject.file("out"))
     }
     build {
-        dependsOn(shadowJar)
+        dependsOn(copyTask)
     }
     processResources {
         duplicatesStrategy = DuplicatesStrategy.INCLUDE

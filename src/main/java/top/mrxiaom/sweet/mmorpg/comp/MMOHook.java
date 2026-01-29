@@ -11,18 +11,23 @@ import top.mrxiaom.sweet.mmorpg.comp.player.PlayerAuraSkills;
 import top.mrxiaom.sweet.mmorpg.comp.player.PlayerBuiltIn;
 import top.mrxiaom.sweet.mmorpg.func.AbstractPluginHolder;
 
-public class MMOHook extends AbstractPluginHolder implements RPGHandler, Listener {
-    LevelChangeResolver levelChange = new LevelChangeResolver();
+public class MMOHook extends AbstractPluginHolder implements Listener {
+    private final MMOItemsCompatibility mi;
     public MMOHook(SweetMMORPG plugin) {
         super(plugin, true);
+        mi = new MMOItemsCompatibility(plugin, this, this::getInfo);
         if (plugin.getManagerType().equals(EnumManager.AuraSkills)) {
             new AuraSkillsListener(plugin);
         }
     }
 
+    public void setRPG() {
+        mi.setRPG();
+    }
+
     @EventHandler
     public void a(PlayerLevelChangeEvent event) {
-        levelChange.resolve(event.getPlayer());
+        mi.resolveLevelChange(event.getPlayer());
     }
 
     public RPGPlayer getInfo(PlayerData data) {
@@ -34,10 +39,6 @@ public class MMOHook extends AbstractPluginHolder implements RPGHandler, Listene
                 return new PlayerAuraSkills(plugin, data);
         }
         throw new IllegalStateException("预料之中的错误: 未知的管理器类型 " + manager.name());
-    }
-
-    @Override
-    public void refreshStats(PlayerData data) {
     }
 
     public static MMOHook inst() {
