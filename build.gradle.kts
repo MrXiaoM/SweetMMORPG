@@ -12,7 +12,7 @@ buildscript {
 val base = top.mrxiaom.gradle.LibraryHelper(project)
 
 group = "top.mrxiaom.sweet.mmorpg"
-version = "1.0.3"
+version = "1.0.4"
 val targetJavaVersion = 8
 val pluginBaseModules = base.modules.run { listOf(library) }
 val shadowGroup = "top.mrxiaom.sweet.mmorpg.libs"
