@@ -6,29 +6,20 @@ import net.Indyuce.mmoitems.api.player.RPGPlayer;
 import org.bukkit.OfflinePlayer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import top.mrxiaom.pluginbase.utils.depend.PlaceholdersExpansion;
 import top.mrxiaom.sweet.mmorpg.SweetMMORPG;
 import top.mrxiaom.sweet.mmorpg.api.ResourceData;
 import top.mrxiaom.sweet.mmorpg.api.StatType;
 import top.mrxiaom.sweet.mmorpg.comp.player.IExtendedRPGPlayer;
 
-public class Placeholders extends PlaceholderExpansion {
-    SweetMMORPG plugin;
+public class Placeholders extends PlaceholdersExpansion<SweetMMORPG> {
     public Placeholders(SweetMMORPG plugin) {
-        this.plugin = plugin;
-    }
-    @Override
-    public @NotNull String getIdentifier() {
-        return plugin.getDescription().getName().toLowerCase();
+        super(plugin);
     }
 
     @Override
-    public @NotNull String getAuthor() {
-        return String.join(", ", plugin.getDescription().getAuthors());
-    }
-
-    @Override
-    public @NotNull String getVersion() {
-        return plugin.getDescription().getVersion();
+    public boolean persist() {
+        return true;
     }
 
     @Override
