@@ -2,7 +2,6 @@ package top.mrxiaom.sweet.mmorpg.comp;
 
 import net.Indyuce.mmoitems.api.player.PlayerData;
 import net.Indyuce.mmoitems.api.player.RPGPlayer;
-import net.Indyuce.mmoitems.comp.rpg.RPGHandler;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerLevelChangeEvent;

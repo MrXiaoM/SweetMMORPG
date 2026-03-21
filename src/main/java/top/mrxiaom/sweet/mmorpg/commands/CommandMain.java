@@ -1,5 +1,5 @@
 package top.mrxiaom.sweet.mmorpg.commands;
-        
+
 import com.google.common.collect.Lists;
 import net.Indyuce.mmoitems.api.player.RPGPlayer;
 import org.bukkit.command.Command;
@@ -15,10 +15,11 @@ import top.mrxiaom.pluginbase.func.AutoRegister;
 import top.mrxiaom.pluginbase.utils.Util;
 import top.mrxiaom.sweet.mmorpg.SweetMMORPG;
 import top.mrxiaom.sweet.mmorpg.api.ResourceData;
-import top.mrxiaom.sweet.mmorpg.api.ResourceRegainReason;
 import top.mrxiaom.sweet.mmorpg.func.AbstractModule;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 @AutoRegister
 public class CommandMain extends AbstractModule implements CommandExecutor, TabCompleter, Listener {

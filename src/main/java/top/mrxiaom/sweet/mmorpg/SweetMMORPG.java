@@ -1,15 +1,10 @@
 package top.mrxiaom.sweet.mmorpg;
-        
+
 import dev.aurelium.auraskills.api.AuraSkillsApi;
 import dev.aurelium.auraskills.api.registry.NamespacedRegistry;
-import net.Indyuce.mmoitems.MMOItems;
-import net.Indyuce.mmoitems.comp.rpg.RPGHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.event.HandlerList;
-import org.bukkit.event.Listener;
-import org.bukkit.plugin.Plugin;
 import top.mrxiaom.pluginbase.BukkitPlugin;
 import top.mrxiaom.pluginbase.resolver.DefaultLibraryResolver;
 import top.mrxiaom.pluginbase.utils.ClassLoaderWrapper;
@@ -26,7 +21,6 @@ import top.mrxiaom.sweet.mmorpg.database.PlayerDatabase;
 import java.io.File;
 import java.net.URL;
 import java.util.List;
-import java.util.logging.Level;
 
 public class SweetMMORPG extends BukkitPlugin {
     public static SweetMMORPG getInstance() {

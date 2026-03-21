@@ -1,6 +1,5 @@
 package top.mrxiaom.sweet.mmorpg.func;
 
-import net.Indyuce.mmoitems.api.player.RPGPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.MemoryConfiguration;
 import org.bukkit.scheduler.BukkitTask;

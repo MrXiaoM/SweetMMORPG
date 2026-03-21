@@ -29,6 +29,11 @@ public class ResourceData {
         this.setStamina(stamina);
     }
 
+    public void reapplyModifiers() {
+        unregisterModifiers();
+        registerModifiers();
+    }
+
     public void unregisterModifiers() {
         for (StatModifier modifier : registeredModifiers) {
             modifier.unregister(data);
@@ -63,7 +68,7 @@ public class ResourceData {
 
     public ResourceData setPlayer(RPGPlayer player) {
         this.player = player;
-        registerModifiers();
+        this.reapplyModifiers();
         return this;
     }
 

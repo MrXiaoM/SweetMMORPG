@@ -51,8 +51,7 @@ public class PlayerDatabase extends AbstractPluginHolder implements IDatabase, L
         staminaRatio = config.getDouble("default-ratio.stamina", 75) / 100.0;
         // 重新注册 stat modifier
         for (ResourceData data : cache.values()) {
-            data.unregisterModifiers();
-            data.registerModifiers();
+            data.reapplyModifiers();
         }
     }
 
@@ -136,7 +135,10 @@ public class PlayerDatabase extends AbstractPluginHolder implements IDatabase, L
             warn(e);
         }
         ResourceData data = getOrCreateData(uuid, null, null, false);
-        if (!error) save(data);
+        if (!error) {
+            save(data);
+            data.reapplyModifiers();
+        }
         return data;
     }
 

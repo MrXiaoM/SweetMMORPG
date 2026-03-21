@@ -1,7 +1,6 @@
 package top.mrxiaom.sweet.mmorpg.comp;
 
 import io.lumine.mythic.lib.MythicLib;
-import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import net.Indyuce.mmoitems.api.player.RPGPlayer;
 import org.bukkit.OfflinePlayer;
 import org.jetbrains.annotations.NotNull;
