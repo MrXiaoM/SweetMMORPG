@@ -2,6 +2,12 @@
 
 仅为 MMOItems 提供法力值、体力值的，最基础的 RPG 核心插件。
 
+## 停止更新
+
+MMOItems 已经在 [2026年3月30日](https://gitlab.com/phoenix-dvpmt/mmoitems/-/commit/b11717fb1e1c4028e2e1261ad07aaa14bbaec6f1) 的提交中彻底禁止了第三方 RPG 管理器，本插件作者不再为这种狗屎兼容性再做任何更新。购买 MMOItems 属于是妥妥的正版受害者。
+
+Fuck Phoenix Development, fuck Jules. 😡😡😡
+
 ## 简介
 
 由于我的服务器不需要那么多花里胡哨的技能、职业系统，安装那些复杂的 RPG 核心插件甚至会影响服务器原本的体验，所以在 wiki 上找到了官方提供的 mmoitems-mana 扩展。但是打开仓库一看… 至少已经有两年没更新了，不太放心这个扩展插件的可用性，而且官方扩展的功能也太少了，根本不够用。  
